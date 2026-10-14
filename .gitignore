@@ -1,0 +1,4 @@
+# VS Code - Code Runner temp files
+tempCodeRunnerFile.js
+*.tempCodeRunnerFile.js
+**/tempCodeRunnerFile.js
