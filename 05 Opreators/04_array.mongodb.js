@@ -15,6 +15,10 @@ use('ecommerce')
 //   { title: 1, tags: 1 }
 // )
 
+// Difference between $in vs $all:
+// - $in  (OR logic) : Matches if the array has ANY ONE of the values (e.g., 'beauty' OR 'mascara')
+// - $all (AND logic): Matches ONLY if the array has ALL specified values (both 'beauty' AND 'mascara')
+
 // 2. $elemMatch: Matches embedded objects in array matching multiple conditions
 // (e.g. at least one review has rating 5 and reviewerName 'Eleanor Collins')
 // db.products.find(
