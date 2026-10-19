@@ -160,55 +160,103 @@ use('test')
 // db.products.find({reviews: {$elemMatch: {rating: {$lt:3}}}})
 
 // Q83: Find products where SAME review has rating < 3.
-
+// db.products.find({reviews: {$elemMatch: {rating: {$lt:3}}}})
 
 // Q84: Find products where ALL reviews rating ≥ 4.
-
+// db.products.find(
+//     {
+//         'reviews.rating': { $not: { $lt: 4 } },
+//         'reviews.0': {$exists: true}
+//     }
+// )
 
 // Q85: Find products where Rahul exists in reviews.
-
+// db.products.find(
+//     {'reviews.user': 'Rahul'}
+// )
 
 // Q86: Find products where Rahul reviewed AND rating < 3 (same review).
-
+// db.products.find({
+//     reviews: {
+//         $elemMatch: {
+//             user: 'Rahul', rating: { $lt: 3 }
+//         }
+//     }
+// })
 
 // Q87: Find products with highest stock.
-
+// db.products.find({}).sort({stock: -1}).limit(1)
 
 // Q88: Add tag "sale" where discount > 20.
+// db.products.updateMany(
+//     {discount: {$gte: 20}},
+//     {$push: {tags: "sale"}}
+// )
 
-
-// Q89: Add review only if product has less than 5 reviews.
-
+// Q89: Add review only if product has less than 2 reviews.
+// db.products.updateMany(
+//     {'reviews.1': {$exists: false}},
+//     {$push: {reviews: {user: "Aman", rating: 4}}}
+// )
 
 // Q90: Find products where price > stock.
-
+// db.products.find(
+//     {$expr: {$gt: ["$price", "$stock"]}}
+// )
 
 // Q91: Find products where discount is missing OR 0.
-
+// db.products.find({
+//     $or: [{discount: 0}, {discount: {$exists: false}}]
+// })
 
 // Q92: Find products where name length > category length.
-
+// db.products.find({
+//     $expr: { $gt: [{$strLenCP: "$name"}, {$strLenCP: "$category"}] }
+// })
 
 // Q93: Find products having price between 10000 and 40000 and out.
-
+// db.products.find(
+//     {price: {$gt: 10000, $lt: 40000}, stock: 0}
+// )
 
 // Q94: Find users with empty wishlist.
-
+// db.users.find(
+//     {wishlist: {$size: 0}}
+// )
 
 // Q95: Find orders where amount > 10000 and status delivered.
-
+// db.orders.find({
+//     totalAmount: {$gt: 10000},
+//     status: 'delivered'
+// })
 
 // Q96: Find products where stock is between 5 and 20 but not 10.
-
+// db.products.find({
+//     stock: {$gt: 5, $lt: 20, $ne: 10}
+// })
 
 // Q97: Find products where either discount > 20 OR stock < 5.
-
+// db.products.find({
+//     $or: [{discount: {$gt: 20}}, {stock: {$lt: 5}}]
+// })
 
 // Q98: Find products where tags include "gaming" but not "mobile".
-
+// db.products.find({
+//     tags: {$in: ["gaming"], $nin: ["mobile"]}
+// })
 
 // Q99: Find products where review count > 2 and < 5.
-
+// db.products.find({
+//     reviews: { $type: "array" },
+//     $expr: {
+//         $and: [
+//             { $gt: [{ $size: "$reviews" }, 2] },
+//             { $lt: [{ $size: "$reviews" }, 5] }
+//         ]
+//     }
+// })
 
 // Q100: Find products where no review has rating < 3.
-
+// db.products.find(
+//     {reviews: {$not: {$elemMatch: {rating: {$lt: 3}}}}}
+// )
