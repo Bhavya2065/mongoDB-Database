@@ -18,6 +18,7 @@ use('ecommerce')
   8. $push     -> Adds an element to an array
   9. $addToSet -> Adds an element to an array only if it doesn't already exist (no duplicates)
   10. $pull    -> Removes all matching elements from an array
+  11. $        -> Positional operator to update the matched array element
 */
 
 // ==================== FIELD UPDATE OPERATORS ====================
@@ -83,3 +84,16 @@ use('ecommerce')
 //   { title: 'Essence Mascara Lash Princess' },
 //   { $pull: { tags: 'trending' } }
 // )
+
+// 11. $ (Positional Operator): Update matched element inside an array
+// ----------------------------------------------------------------------
+// IMPORTANT DIFFERENCE: Embedded Object vs Array of Objects
+//
+// Case 1: Embedded Object `{}` -> DO NOT use `$`
+// Data:    address: { city: 'Surat', state: 'GJ' }
+// Update:  $set: { 'address.city': 'Kashi' }
+//
+// Case 2: Array of Objects `[{}]` -> MUST use `$`
+// Data:    address: [ { city: 'Surat', state: 'GJ' } ]
+// Update:  $set: { 'address.$.city': 'Kashi' }
+// ----------------------------------------------------------------------
